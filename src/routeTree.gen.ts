@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as VoiturierRouteImport } from './routes/voiturier'
+import { Route as VtcRouteImport } from './routes/vtc'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VoiturierRoute = VoiturierRouteImport.update({
+  id: '/voiturier',
+  path: '/voiturier',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VtcRoute = VtcRouteImport.update({
+  id: '/vtc',
+  path: '/vtc',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/voiturier': typeof VoiturierRoute
+  '/vtc': typeof VtcRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/voiturier': typeof VoiturierRoute
+  '/vtc': typeof VtcRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/voiturier': typeof VoiturierRoute
+  '/vtc': typeof VtcRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/voiturier' | '/vtc'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/voiturier' | '/vtc'
+  id: '__root__' | '/' | '/voiturier' | '/vtc'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  VoiturierRoute: typeof VoiturierRoute
+  VtcRoute: typeof VtcRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/voiturier': {
+      id: '/voiturier'
+      path: '/voiturier'
+      fullPath: '/voiturier'
+      preLoaderRoute: typeof VoiturierRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vtc': {
+      id: '/vtc'
+      path: '/vtc'
+      fullPath: '/vtc'
+      preLoaderRoute: typeof VtcRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  VoiturierRoute: VoiturierRoute,
+  VtcRoute: VtcRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
