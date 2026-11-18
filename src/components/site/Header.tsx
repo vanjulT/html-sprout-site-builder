@@ -21,10 +21,14 @@ function useNavItems() {
   ] as const;
 }
 
-export function LanguageSwitch({ className }: { className?: string }) {
+export function LanguageSwitch({ className }: { className?: string | undefined }) {
   const { lang, setLang, t } = useI18n();
   return (
-    <div className={cn("flex items-center text-[13px] font-semibold", className)} role="group" aria-label={t.nav.language}>
+    <div
+      className={cn("flex items-center text-[13px] font-semibold", className)}
+      role="group"
+      aria-label={t.nav.language}
+    >
       {LANGS.map((l, i) => (
         <span key={l.id} className="flex items-center">
           {i > 0 && <span className="mx-1.5 text-border">|</span>}
@@ -46,7 +50,13 @@ export function LanguageSwitch({ className }: { className?: string }) {
   );
 }
 
-function AccountSheet({ open, onOpenChange }: { open: boolean; onOpenChange: (o: boolean) => void }) {
+function AccountSheet({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (o: boolean) => void;
+}) {
   const { t } = useI18n();
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
@@ -60,7 +70,9 @@ function AccountSheet({ open, onOpenChange }: { open: boolean; onOpenChange: (o:
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="w-full max-w-md p-8 sm:max-w-md">
-        <SheetTitle className="mt-6 font-display text-3xl font-normal">{t.account.title}</SheetTitle>
+        <SheetTitle className="mt-6 font-display text-3xl font-normal">
+          {t.account.title}
+        </SheetTitle>
         <SheetDescription className="mt-2 text-[15px]">{t.account.text}</SheetDescription>
         <form onSubmit={submit} noValidate className="mt-8 flex flex-col gap-4">
           <Field label={t.common.email} htmlFor="acc-mail" error={error}>
@@ -103,7 +115,10 @@ export function Header() {
               key={i.to}
               to={i.to}
               className="relative py-1 text-[14.5px] font-medium text-muted-foreground transition-colors hover:text-foreground"
-              activeProps={{ className: "!text-foreground after:absolute after:inset-x-0 after:-bottom-[23px] after:h-[2px] after:bg-sun" }}
+              activeProps={{
+                className:
+                  "!text-foreground after:absolute after:inset-x-0 after:-bottom-[23px] after:h-[2px] after:bg-sun",
+              }}
             >
               {i.label}
             </Link>

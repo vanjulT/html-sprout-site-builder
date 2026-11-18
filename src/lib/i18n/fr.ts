@@ -103,7 +103,8 @@ export const fr = {
     imageAlt: "Berline garée devant le terminal de l'aéroport Nice Côte d'Azur",
     servicesEyebrow: "Nos services",
     servicesTitle: "Trois services, un seul interlocuteur",
-    servicesLead: "Tout se passe au dépose-minute des terminaux 1 et 2. Ni recherche de place, ni navette.",
+    servicesLead:
+      "Tout se passe au dépose-minute des terminaux 1 et 2. Ni recherche de place, ni navette.",
     services: {
       valet: {
         title: "Parking voiturier",
@@ -130,13 +131,23 @@ export const fr = {
     howEyebrow: "Déroulement",
     howTitle: "Comment ça marche",
     steps: [
-      { title: "Réservez en ligne", text: "Dates, terminal et numéro de vol. Paiement sécurisé et confirmation immédiate." },
-      { title: "Remettez vos clés", text: "Un voiturier vous attend au dépose-minute. Vous échangez avec lui par WhatsApp." },
-      { title: "Repartez sans attendre", text: "Nous suivons votre vol. Votre véhicule vous est restitué dès l'atterrissage." },
+      {
+        title: "Réservez en ligne",
+        text: "Dates, terminal et numéro de vol. Paiement sécurisé et confirmation immédiate.",
+      },
+      {
+        title: "Remettez vos clés",
+        text: "Un voiturier vous attend au dépose-minute. Vous échangez avec lui par WhatsApp.",
+      },
+      {
+        title: "Repartez sans attendre",
+        text: "Nous suivons votre vol. Votre véhicule vous est restitué dès l'atterrissage.",
+      },
     ],
     subEyebrow: "Abonnement annuel",
     subTitle: "Vous venez souvent à Nice ?",
-    subText: "25 prises en charge et 25 retours inclus, parking sécurisé toute l'année. Conçu pour les résidents secondaires et les voyageurs fréquents.",
+    subText:
+      "25 prises en charge et 25 retours inclus, parking sécurisé toute l'année. Conçu pour les résidents secondaires et les voyageurs fréquents.",
     subCta: "Découvrir l'abonnement",
   },
   valet: {
@@ -149,7 +160,11 @@ export const fr = {
     pick: "Récupération",
     options: "Options",
     optionsHint: "Réalisées pendant votre absence",
-    optionLabels: { int: "Nettoyage intérieur", ext: "Nettoyage extérieur", complet: "Nettoyage complet" },
+    optionLabels: {
+      int: "Nettoyage intérieur",
+      ext: "Nettoyage extérieur",
+      complet: "Nettoyage complet",
+    },
     fullCleanTip: "Le nettoyage complet couvre les deux pour 25 € de moins.",
     fullCleanSwitch: "Choisir le nettoyage complet",
     fullCleanDone: "Nettoyage complet sélectionné",
@@ -160,7 +175,8 @@ export const fr = {
     pay: (amount: string) => `Payer ${amount}`,
     rateNote: "Tarif : 50 € TTC par tranche de 24 h entamée. Confirmation par e-mail et WhatsApp.",
     successTitle: "Réservation confirmée",
-    successText: "Un voiturier vous attendra au dépose-minute. La confirmation vous a été envoyée par e-mail et WhatsApp.",
+    successText:
+      "Un voiturier vous attendra au dépose-minute. La confirmation vous a été envoyée par e-mail et WhatsApp.",
     vehicle: "Véhicule",
     paid: "Total payé",
   },
@@ -202,7 +218,8 @@ export const fr = {
     send: "Envoyer la demande",
     afterNote: "Une fois le devis accepté, vous recevez la confirmation de votre course.",
     successTitle: "Demande envoyée",
-    successText: "Vous recevrez votre devis sous 2 h par e-mail et WhatsApp. Aucun paiement n'a été effectué.",
+    successText:
+      "Vous recevrez votre devis sous 2 h par e-mail et WhatsApp. Aucun paiement n'a été effectué.",
     yourAddress: "Votre adresse",
   },
   rental: {
@@ -240,7 +257,8 @@ export const fr = {
     idNote: "Permis et pièce d'identité à transmettre en ligne après la réservation.",
     depositNote: "Caution par empreinte bancaire à la remise des clés.",
     successTitle: "Location réservée",
-    successText: "Dernière étape : transmettez votre permis et votre pièce d'identité depuis votre espace client.",
+    successText:
+      "Dernière étape : transmettez votre permis et votre pièce d'identité depuis votre espace client.",
     paid: "Total payé",
     depositLabel: "Caution",
     depositValue: (n: string) => `${n} (empreinte)`,
@@ -253,15 +271,28 @@ export const fr = {
     best: "La plus avantageuse",
     pickups: "prises en charge",
     returns: "retours inclus",
-    features: ["Parking sécurisé toute l'année", "Remise et récupération à T1 ou T2", "Suivi de vol et WhatsApp"],
+    features: [
+      "Parking sécurisé toute l'année",
+      "Remise et récupération à T1 ou T2",
+      "Suivi de vol et WhatsApp",
+    ],
     cta: "Souscrire l'abonnement",
     perTrip: "Soit environ 42 € par trajet, sur la base de 50 trajets.",
     whoTitle: "Pour qui ?",
     whoLead: "Pensé pour celles et ceux qui reviennent souvent sur la Côte d'Azur.",
     who: [
-      { title: "Résidents secondaires", text: "Vous venez plusieurs fois par an : votre voiture vous attend à l'aéroport." },
-      { title: "Voyageurs fréquents", text: "Déplacements professionnels réguliers, sans recherche de place ni navette." },
-      { title: "Plusieurs véhicules", text: "Ajoutez un second véhicule à votre abonnement. Tarif sur demande." },
+      {
+        title: "Résidents secondaires",
+        text: "Vous venez plusieurs fois par an : votre voiture vous attend à l'aéroport.",
+      },
+      {
+        title: "Voyageurs fréquents",
+        text: "Déplacements professionnels réguliers, sans recherche de place ni navette.",
+      },
+      {
+        title: "Plusieurs véhicules",
+        text: "Ajoutez un second véhicule à votre abonnement. Tarif sur demande.",
+      },
     ],
     howTitle: "Comment ça marche",
     steps: [
@@ -278,16 +309,29 @@ export const fr = {
     ],
     faqTitle: "Questions fréquentes",
     faq: [
-      { q: "Que se passe-t-il après 25 trajets ?", a: "Chaque prise en charge ou retour supplémentaire est facturé 45 €. Nous vous prévenons dès le 20e trajet." },
-      { q: "Puis-je changer de véhicule ?", a: "Oui. Mettez à jour l'immatriculation depuis votre espace client au moins 24 h avant votre prochain voyage." },
-      { q: "Quelle assurance couvre mon véhicule ?", a: "Votre véhicule reste assuré par votre contrat. Notre assurance professionnelle couvre la conduite par nos voituriers et le stationnement." },
-      { q: "Comment résilier ou renouveler ?", a: "L'abonnement dure 12 mois. Nous vous écrivons un mois avant l'échéance pour le renouveler ou y mettre fin." },
+      {
+        q: "Que se passe-t-il après 25 trajets ?",
+        a: "Chaque prise en charge ou retour supplémentaire est facturé 45 €. Nous vous prévenons dès le 20e trajet.",
+      },
+      {
+        q: "Puis-je changer de véhicule ?",
+        a: "Oui. Mettez à jour l'immatriculation depuis votre espace client au moins 24 h avant votre prochain voyage.",
+      },
+      {
+        q: "Quelle assurance couvre mon véhicule ?",
+        a: "Votre véhicule reste assuré par votre contrat. Notre assurance professionnelle couvre la conduite par nos voituriers et le stationnement.",
+      },
+      {
+        q: "Comment résilier ou renouveler ?",
+        a: "L'abonnement dure 12 mois. Nous vous écrivons un mois avant l'échéance pour le renouveler ou y mettre fin.",
+      },
     ],
     formTitle: "Souscrire l'abonnement",
     formText: "2 090 € TTC pour 12 mois · 25 prises en charge et 25 retours",
     pay: "Payer 2 090 €",
     successTitle: "Bienvenue parmi nos abonnés",
-    successText: "Votre contrat arrive par e-mail. Planifiez votre premier voyage depuis votre espace client ou par WhatsApp.",
+    successText:
+      "Votre contrat arrive par e-mail. Planifiez votre premier voyage depuis votre espace client ou par WhatsApp.",
     formula: "Formule",
     formulaValue: "Annuelle · 12 mois",
     included: "Trajets inclus",
@@ -300,7 +344,11 @@ export const fr = {
     text: "Retrouvez vos réservations, planifiez vos trajets d'abonné et téléchargez vos factures.",
     send: "Recevoir mon lien de connexion",
     sent: (email: string) => `Lien de connexion envoyé à ${email}`,
-    perks: ["Vos réservations à venir", "Factures et contrat d'abonnement", "Vos véhicules enregistrés"],
+    perks: [
+      "Vos réservations à venir",
+      "Factures et contrat d'abonnement",
+      "Vos véhicules enregistrés",
+    ],
   },
   footer: {
     tagline: "Voiturier, chauffeur privé et location de véhicules à l'aéroport Nice Côte d'Azur.",

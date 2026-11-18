@@ -31,13 +31,13 @@ import {
 } from "@/lib/pricing";
 import { isEmail, isPhone, makeRef, type Terminal } from "@/lib/site";
 
-type Search = { drop?: string; pick?: string; term?: Terminal };
+type Search = { drop?: string | undefined; pick?: string | undefined; term?: Terminal | undefined };
 
 export const Route = createFileRoute("/voiturier")({
   validateSearch: (s: Record<string, unknown>): Search => ({
-    drop: typeof s.drop === "string" ? s.drop : undefined,
-    pick: typeof s.pick === "string" ? s.pick : undefined,
-    term: s.term === "T1" || s.term === "T2" ? s.term : undefined,
+    drop: typeof s["drop"] === "string" ? s["drop"] : undefined,
+    pick: typeof s["pick"] === "string" ? s["pick"] : undefined,
+    term: s["term"] === "T1" || s["term"] === "T2" ? s["term"] : undefined,
   }),
   head: () => ({
     meta: [
@@ -50,14 +50,15 @@ export const Route = createFileRoute("/voiturier")({
       { property: "og:title", content: "Réserver un voiturier à l'aéroport de Nice" },
       {
         property: "og:description",
-        content: "50 € TTC par tranche de 24 h. Remise des clés au dépose-minute, parking sécurisé.",
+        content:
+          "50 € TTC par tranche de 24 h. Remise des clés au dépose-minute, parking sécurisé.",
       },
     ],
   }),
   component: ValetPage,
 });
 
-type Errors = Partial<Record<"name" | "phone" | "email" | "plate", string>>;
+type Errors = Partial<Record<"name" | "phone" | "email" | "plate", string | undefined>>;
 
 function ValetPage() {
   const { t, eur } = useI18n();
@@ -94,7 +95,9 @@ function ValetPage() {
     if (!contact.plate.trim()) er.plate = t.common.errors.plate;
     setErrors(er);
     if (q.error || Object.keys(er).length) {
-      document.querySelector("[data-invalid]")?.scrollIntoView({ behavior: "smooth", block: "center" });
+      document
+        .querySelector("[data-invalid]")
+        ?.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
     setBusy(true);
@@ -109,7 +112,10 @@ function ValetPage() {
           [t.valet.pick, formatShort(pick, t.locale)],
           [t.common.terminal, term],
           [t.valet.vehicle, contact.plate.toUpperCase()],
-          [t.valet.options, options.map((o) => t.valet.optionLabels[o]).join(", ") || t.common.none],
+          [
+            t.valet.options,
+            options.map((o) => t.valet.optionLabels[o]).join(", ") || t.common.none,
+          ],
           [t.valet.paid, `${eur(q.total)} ${t.common.vat}`],
         ],
       });
@@ -124,7 +130,11 @@ function ValetPage() {
           <form noValidate onSubmit={(e) => e.preventDefault()}>
             <FormSection title={t.valet.stay} hint={t.valet.stayHint}>
               <div className="grid gap-5 md:grid-cols-2">
-                <Field label={t.valet.drop} htmlFor="v-drop" error={showDateError && q.error ? t.common.dateErrors[q.error] : undefined}>
+                <Field
+                  label={t.valet.drop}
+                  htmlFor="v-drop"
+                  error={showDateError && q.error ? t.common.dateErrors[q.error] : undefined}
+                >
                   <DateTimeField
                     id="v-drop"
                     value={drop}
@@ -154,7 +164,13 @@ function ValetPage() {
                   />
                 </Field>
                 <Field label={t.common.flightReturn} htmlFor="v-flight">
-                  <Input id="v-flight" value={flight} onChange={(e) => setFlight(e.target.value)} placeholder={t.common.flightPh} autoComplete="off" />
+                  <Input
+                    id="v-flight"
+                    value={flight}
+                    onChange={(e) => setFlight(e.target.value)}
+                    placeholder={t.common.flightPh}
+                    autoComplete="off"
+                  />
                 </Field>
               </div>
             </FormSection>
@@ -191,16 +207,45 @@ function ValetPage() {
             <FormSection title={t.valet.contact} hint={t.valet.contactHint}>
               <div className="grid gap-5 md:grid-cols-2">
                 <Field label={t.common.name} htmlFor="v-name" error={errors.name}>
-                  <Input id="v-name" value={contact.name} onChange={set("name")} autoComplete="name" placeholder={t.common.namePh} className={errors.name ? invalidClass : undefined} />
+                  <Input
+                    id="v-name"
+                    value={contact.name}
+                    onChange={set("name")}
+                    autoComplete="name"
+                    placeholder={t.common.namePh}
+                    className={errors.name ? invalidClass : undefined}
+                  />
                 </Field>
                 <Field label={t.common.phone} htmlFor="v-phone" error={errors.phone}>
-                  <Input id="v-phone" type="tel" value={contact.phone} onChange={set("phone")} autoComplete="tel" placeholder={t.common.phonePh} className={errors.phone ? invalidClass : undefined} />
+                  <Input
+                    id="v-phone"
+                    type="tel"
+                    value={contact.phone}
+                    onChange={set("phone")}
+                    autoComplete="tel"
+                    placeholder={t.common.phonePh}
+                    className={errors.phone ? invalidClass : undefined}
+                  />
                 </Field>
                 <Field label={t.common.email} htmlFor="v-mail" error={errors.email}>
-                  <Input id="v-mail" type="email" value={contact.email} onChange={set("email")} autoComplete="email" placeholder={t.common.emailPh} className={errors.email ? invalidClass : undefined} />
+                  <Input
+                    id="v-mail"
+                    type="email"
+                    value={contact.email}
+                    onChange={set("email")}
+                    autoComplete="email"
+                    placeholder={t.common.emailPh}
+                    className={errors.email ? invalidClass : undefined}
+                  />
                 </Field>
                 <Field label={t.common.plate} htmlFor="v-plate" error={errors.plate}>
-                  <Input id="v-plate" value={contact.plate} onChange={set("plate")} placeholder={t.common.platePh} className={`uppercase placeholder:normal-case ${errors.plate ? invalidClass : ""}`} />
+                  <Input
+                    id="v-plate"
+                    value={contact.plate}
+                    onChange={set("plate")}
+                    placeholder={t.common.platePh}
+                    className={`uppercase placeholder:normal-case ${errors.plate ? invalidClass : ""}`}
+                  />
                 </Field>
               </div>
             </FormSection>
@@ -208,10 +253,19 @@ function ValetPage() {
         }
         summary={
           <Summary title={t.common.summary}>
-            <SummaryRow label={t.valet.duration} value={q.slots ? durationText(drop, pick, t.locale === "fr-FR" ? "j" : "d") : "—"} />
-            <SummaryRow label={t.valet.parking} value={q.slots ? `${t.common.slots(q.slots)} · ${eur(q.parking)}` : "—"} />
+            <SummaryRow
+              label={t.valet.duration}
+              value={q.slots ? durationText(drop, pick, t.locale === "fr-FR" ? "j" : "d") : "—"}
+            />
+            <SummaryRow
+              label={t.valet.parking}
+              value={q.slots ? `${t.common.slots(q.slots)} · ${eur(q.parking)}` : "—"}
+            />
             <SummaryRow label={t.common.terminal} value={term} />
-            <SummaryRow label={t.valet.options} value={q.options ? eur(q.options) : t.common.none} />
+            <SummaryRow
+              label={t.valet.options}
+              value={q.options ? eur(q.options) : t.common.none}
+            />
             <SummaryTotal label={t.common.total} value={eur(q.total)} suffix={t.common.vat} />
             <Button size="lg" className="w-full" onClick={pay} disabled={busy}>
               <Lock />

@@ -7,7 +7,10 @@ import { Logo } from "./Logo";
 import { LanguageSwitch } from "./Header";
 
 export function openWhatsApp(missingMessage: string) {
-  if (!SITE.whatsapp) return toast(missingMessage);
+  if (!SITE.whatsapp) {
+    toast(missingMessage);
+    return;
+  }
   window.open(`https://wa.me/${SITE.whatsapp}`, "_blank", "noopener");
 }
 
@@ -29,7 +32,8 @@ export function WhatsAppButton() {
 export function Footer() {
   const { t } = useI18n();
   const soon = () => toast(t.notices.soon);
-  const linkCls = "block py-1 text-[14.5px] text-muted-foreground transition-colors hover:text-foreground";
+  const linkCls =
+    "block py-1 text-[14.5px] text-muted-foreground transition-colors hover:text-foreground";
   return (
     <footer className="border-t bg-paper">
       <div className="site-container grid gap-10 py-14 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
@@ -39,10 +43,18 @@ export function Footer() {
         </div>
         <div>
           <h3 className="eyebrow mb-3">{t.footer.services}</h3>
-          <Link to="/voiturier" className={linkCls}>{t.nav.valet}</Link>
-          <Link to="/vtc" className={linkCls}>{t.nav.vtc}</Link>
-          <Link to="/location" className={linkCls}>{t.nav.rental}</Link>
-          <Link to="/abonnement" className={linkCls}>{t.nav.subscription}</Link>
+          <Link to="/voiturier" className={linkCls}>
+            {t.nav.valet}
+          </Link>
+          <Link to="/vtc" className={linkCls}>
+            {t.nav.vtc}
+          </Link>
+          <Link to="/location" className={linkCls}>
+            {t.nav.rental}
+          </Link>
+          <Link to="/abonnement" className={linkCls}>
+            {t.nav.subscription}
+          </Link>
         </div>
         <div>
           <h3 className="eyebrow mb-3">{t.footer.airport}</h3>
@@ -52,7 +64,11 @@ export function Footer() {
         </div>
         <div>
           <h3 className="eyebrow mb-3">{t.footer.contact}</h3>
-          <button type="button" className={linkCls} onClick={() => openWhatsApp(t.notices.whatsappMissing)}>
+          <button
+            type="button"
+            className={linkCls}
+            onClick={() => openWhatsApp(t.notices.whatsappMissing)}
+          >
             {t.footer.whatsapp}
           </button>
           <button type="button" className={linkCls} onClick={soon}>
@@ -61,12 +77,14 @@ export function Footer() {
         </div>
       </div>
       <div className="site-container flex flex-wrap items-center justify-between gap-4 border-t py-6 text-[13px] text-muted-foreground">
-        <span>
-          © 2026 Azur Voiturier. {t.footer.rights}
-        </span>
+        <span>© 2026 Azur Voiturier. {t.footer.rights}</span>
         <div className="flex items-center gap-5">
-          <button type="button" onClick={soon} className="hover:text-foreground">{t.footer.terms}</button>
-          <button type="button" onClick={soon} className="hover:text-foreground">{t.footer.legal}</button>
+          <button type="button" onClick={soon} className="hover:text-foreground">
+            {t.footer.terms}
+          </button>
+          <button type="button" onClick={soon} className="hover:text-foreground">
+            {t.footer.legal}
+          </button>
           <LanguageSwitch />
         </div>
       </div>

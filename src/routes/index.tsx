@@ -24,7 +24,8 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Azur Voiturier · Aéroport Nice Côte d'Azur" },
       {
         property: "og:description",
-        content: "Voiturier, chauffeur privé et location de véhicules au dépose-minute de l'aéroport de Nice.",
+        content:
+          "Voiturier, chauffeur privé et location de véhicules au dépose-minute de l'aéroport de Nice.",
       },
     ],
   }),
@@ -190,7 +191,12 @@ function BookingWidget() {
               onClick={() =>
                 navigate({
                   to: "/vtc",
-                  search: { dir, addr: addr || undefined, date: rideDate ? toLocalIso(rideDate) : undefined, pax },
+                  search: {
+                    dir,
+                    addr: addr || undefined,
+                    date: rideDate ? toLocalIso(rideDate) : undefined,
+                    pax,
+                  },
                 })
               }
             >
@@ -301,12 +307,16 @@ function Home() {
             <p className="eyebrow">{t.home.servicesEyebrow}</p>
             <h2 className="mt-4 text-4xl md:text-5xl">{t.home.servicesTitle}</h2>
           </div>
-          <p className="max-w-md text-muted-foreground md:justify-self-end">{t.home.servicesLead}</p>
+          <p className="max-w-md text-muted-foreground md:justify-self-end">
+            {t.home.servicesLead}
+          </p>
         </div>
         <div className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8">
           {services.map((s, i) => (
             <article key={s.key} className="flex flex-col border-t border-foreground pt-6">
-              <span className="text-sm font-semibold text-muted-foreground tabular-nums">0{i + 1}</span>
+              <span className="text-sm font-semibold text-muted-foreground tabular-nums">
+                0{i + 1}
+              </span>
               <h3 className="mt-3 text-[1.75rem]">{s.title}</h3>
               <p className="mt-3 flex-1 text-[15px] text-muted-foreground">{s.text}</p>
               <p className="mt-6 flex items-baseline gap-2">

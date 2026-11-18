@@ -23,8 +23,8 @@ type Props = {
   value: Date | null;
   onChange: (d: Date) => void;
   /** Start of a range: end dates must come at least one slot after it. */
-  after?: Date | null;
-  invalid?: boolean;
+  after?: Date | null | undefined;
+  invalid?: boolean | undefined;
 };
 
 function firstSlot(day: Date, floor: Date, preferred: string | null) {
@@ -79,10 +79,16 @@ export function DateTimeField({ id, value, onChange, after, invalid }: Props) {
         { label: t.dt.plusThree, date: new Date(after.getTime() + 3 * DAY_MS) },
         { label: t.dt.plusWeek, date: new Date(after.getTime() + 7 * DAY_MS) },
       ]
-    : [0, 1, 7].map((n, i) => {
+    : (
+        [
+          [t.dt.today, 0],
+          [t.dt.tomorrow, 1],
+          [t.dt.inWeek, 7],
+        ] as const
+      ).map(([label, n]) => {
         const d = startOfDay(new Date());
         d.setDate(d.getDate() + n);
-        return { label: [t.dt.today, t.dt.tomorrow, t.dt.inWeek][i], date: d };
+        return { label, date: d };
       });
 
   const selected = day && time ? withTime(day, time) : null;
@@ -153,10 +159,15 @@ export function DateTimeField({ id, value, onChange, after, invalid }: Props) {
         <div className="border-t p-3">
           <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             {t.dt.time}
-            {!day && <span className="ml-1 normal-case tracking-normal">· {t.dt.pickDayFirst}</span>}
+            {!day && (
+              <span className="ml-1 normal-case tracking-normal">· {t.dt.pickDayFirst}</span>
+            )}
           </p>
           {day && (
-            <div ref={timesRef} className="relative grid max-h-32 grid-cols-4 gap-1.5 overflow-y-auto pr-1">
+            <div
+              ref={timesRef}
+              className="relative grid max-h-32 grid-cols-4 gap-1.5 overflow-y-auto pr-1"
+            >
               {TIME_SLOTS.map((slot) => {
                 const disabled = withTime(day, slot) < floor;
                 const isSel = time === slot && !disabled;
@@ -169,7 +180,9 @@ export function DateTimeField({ id, value, onChange, after, invalid }: Props) {
                     onClick={() => setTime(slot)}
                     className={cn(
                       "rounded-sm border py-1.5 text-[13px] font-semibold tabular-nums transition-colors disabled:opacity-30",
-                      isSel ? "border-primary bg-primary text-primary-foreground" : "hover:border-foreground/40",
+                      isSel
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : "hover:border-foreground/40",
                     )}
                   >
                     {slot}

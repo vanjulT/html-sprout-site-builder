@@ -26,13 +26,17 @@ import { CARS, RENTAL_OPTIONS, rentalQuote, type Car, type RentalOptionId } from
 import { isEmail, isPhone, makeRef, type Terminal } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-type Search = { start?: string; end?: string; place?: Terminal };
+type Search = {
+  start?: string | undefined;
+  end?: string | undefined;
+  place?: Terminal | undefined;
+};
 
 export const Route = createFileRoute("/location")({
   validateSearch: (s: Record<string, unknown>): Search => ({
-    start: typeof s.start === "string" ? s.start : undefined,
-    end: typeof s.end === "string" ? s.end : undefined,
-    place: s.place === "T1" || s.place === "T2" ? s.place : undefined,
+    start: typeof s["start"] === "string" ? s["start"] : undefined,
+    end: typeof s["end"] === "string" ? s["end"] : undefined,
+    place: s["place"] === "T1" || s["place"] === "T2" ? s["place"] : undefined,
   }),
   head: () => ({
     meta: [
@@ -52,7 +56,7 @@ export const Route = createFileRoute("/location")({
   component: RentalPage,
 });
 
-type Errors = Partial<Record<"name" | "phone" | "email" | "car", string>>;
+type Errors = Partial<Record<"name" | "phone" | "email" | "car", string | undefined>>;
 
 function RentalPage() {
   const { t, eur } = useI18n();
@@ -93,7 +97,9 @@ function RentalPage() {
     if (!isEmail(contact.email)) er.email = t.common.errors.email;
     setErrors(er);
     if (q.error || Object.keys(er).length) {
-      document.querySelector("[data-invalid]")?.scrollIntoView({ behavior: "smooth", block: "center" });
+      document
+        .querySelector("[data-invalid]")
+        ?.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
     setBusy(true);
@@ -107,7 +113,10 @@ function RentalPage() {
           [t.rental.vehicle, car ? `${t.rental.categories[car.id]} · ${car.model}` : "—"],
           [t.rental.start, `${formatShort(start, t.locale)} · ${place}`],
           [t.rental.end, `${formatShort(end, t.locale)} · ${returnPlace}`],
-          [t.rental.options, options.map((o) => t.rental.optionLabels[o]).join(", ") || t.common.none],
+          [
+            t.rental.options,
+            options.map((o) => t.rental.optionLabels[o]).join(", ") || t.common.none,
+          ],
           [t.rental.depositLabel, car ? t.rental.depositValue(eur(car.deposit)) : "—"],
           [t.rental.paid, `${eur(q.total)} ${t.common.vat}`],
         ],
@@ -148,7 +157,12 @@ function RentalPage() {
                   />
                 </Field>
                 <Field label={t.rental.deliveryPlace}>
-                  <Segmented label={t.rental.deliveryPlace} value={place} onChange={setPlace} options={placeOptions} />
+                  <Segmented
+                    label={t.rental.deliveryPlace}
+                    value={place}
+                    onChange={setPlace}
+                    options={placeOptions}
+                  />
                 </Field>
                 <Field label={t.common.flight} htmlFor="r-flight" className="md:col-span-2">
                   <Input
@@ -223,7 +237,9 @@ function RentalPage() {
                     </div>
                   );
                 })}
-                {errors.car && <p className="text-[13px] font-medium text-destructive">{errors.car}</p>}
+                {errors.car && (
+                  <p className="text-[13px] font-medium text-destructive">{errors.car}</p>
+                )}
               </div>
             </FormSection>
 
@@ -264,7 +280,12 @@ function RentalPage() {
                     className={errors.phone ? invalidClass : undefined}
                   />
                 </Field>
-                <Field label={t.common.email} htmlFor="r-mail" error={errors.email} className="md:col-span-2">
+                <Field
+                  label={t.common.email}
+                  htmlFor="r-mail"
+                  error={errors.email}
+                  className="md:col-span-2"
+                >
                   <Input
                     id="r-mail"
                     type="email"
@@ -288,7 +309,10 @@ function RentalPage() {
             <SummaryRow label={t.rental.duration} value={q.days ? t.common.days(q.days) : "—"} />
             <SummaryRow label={t.rental.delivery} value={place} />
             <SummaryRow label={t.rental.returnTitle} value={returnPlace} />
-            <SummaryRow label={t.rental.options} value={q.options ? eur(q.options) : t.common.none} />
+            <SummaryRow
+              label={t.rental.options}
+              value={q.options ? eur(q.options) : t.common.none}
+            />
             <SummaryTotal label={t.common.total} value={eur(q.total)} suffix={t.common.vat} />
             <Button size="lg" className="w-full" onClick={pay} disabled={busy}>
               <Lock />

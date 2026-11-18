@@ -10,12 +10,24 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AbonnementRouteImport } from './routes/abonnement'
+import { Route as LocationRouteImport } from './routes/location'
 import { Route as VoiturierRouteImport } from './routes/voiturier'
 import { Route as VtcRouteImport } from './routes/vtc'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AbonnementRoute = AbonnementRouteImport.update({
+  id: '/abonnement',
+  path: '/abonnement',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LocationRoute = LocationRouteImport.update({
+  id: '/location',
+  path: '/location',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VoiturierRoute = VoiturierRouteImport.update({
@@ -31,30 +43,38 @@ const VtcRoute = VtcRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/abonnement': typeof AbonnementRoute
+  '/location': typeof LocationRoute
   '/voiturier': typeof VoiturierRoute
   '/vtc': typeof VtcRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/abonnement': typeof AbonnementRoute
+  '/location': typeof LocationRoute
   '/voiturier': typeof VoiturierRoute
   '/vtc': typeof VtcRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/abonnement': typeof AbonnementRoute
+  '/location': typeof LocationRoute
   '/voiturier': typeof VoiturierRoute
   '/vtc': typeof VtcRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/voiturier' | '/vtc'
+  fullPaths: '/' | '/abonnement' | '/location' | '/voiturier' | '/vtc'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/voiturier' | '/vtc'
-  id: '__root__' | '/' | '/voiturier' | '/vtc'
+  to: '/' | '/abonnement' | '/location' | '/voiturier' | '/vtc'
+  id: '__root__' | '/' | '/abonnement' | '/location' | '/voiturier' | '/vtc'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AbonnementRoute: typeof AbonnementRoute
+  LocationRoute: typeof LocationRoute
   VoiturierRoute: typeof VoiturierRoute
   VtcRoute: typeof VtcRoute
 }
@@ -66,6 +86,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/abonnement': {
+      id: '/abonnement'
+      path: '/abonnement'
+      fullPath: '/abonnement'
+      preLoaderRoute: typeof AbonnementRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/location': {
+      id: '/location'
+      path: '/location'
+      fullPath: '/location'
+      preLoaderRoute: typeof LocationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/voiturier': {
@@ -87,6 +121,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AbonnementRoute: AbonnementRoute,
+  LocationRoute: LocationRoute,
   VoiturierRoute: VoiturierRoute,
   VtcRoute: VtcRoute,
 }

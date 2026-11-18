@@ -84,9 +84,33 @@ export type Car = {
 };
 
 export const CARS: Car[] = [
-  { id: "citadine", model: "Peugeot 208", seats: 5, automatic: false, kmPerDay: 250, deposit: 800, pricePerDay: 39 },
-  { id: "berline", model: "Peugeot 508", seats: 5, automatic: true, kmPerDay: 300, deposit: 1200, pricePerDay: 59 },
-  { id: "suv", model: "Peugeot 3008", seats: 5, automatic: true, kmPerDay: 300, deposit: 1500, pricePerDay: 79 },
+  {
+    id: "citadine",
+    model: "Peugeot 208",
+    seats: 5,
+    automatic: false,
+    kmPerDay: 250,
+    deposit: 800,
+    pricePerDay: 39,
+  },
+  {
+    id: "berline",
+    model: "Peugeot 508",
+    seats: 5,
+    automatic: true,
+    kmPerDay: 300,
+    deposit: 1200,
+    pricePerDay: 59,
+  },
+  {
+    id: "suv",
+    model: "Peugeot 3008",
+    seats: 5,
+    automatic: true,
+    kmPerDay: 300,
+    deposit: 1500,
+    pricePerDay: 79,
+  },
 ];
 
 export type RentalOptionId = "driver" | "insurance" | "seat" | "fuel";

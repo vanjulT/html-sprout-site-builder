@@ -88,7 +88,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Azur Voiturier · Aéroport Nice Côte d'Azur" },
       {
         name: "description",
-        content: "Voiturier, chauffeur privé et location de véhicules à l'aéroport Nice Côte d'Azur.",
+        content:
+          "Voiturier, chauffeur privé et location de véhicules à l'aéroport Nice Côte d'Azur.",
       },
       { name: "author", content: "Azur Voiturier" },
       { property: "og:site_name", content: "Azur Voiturier" },

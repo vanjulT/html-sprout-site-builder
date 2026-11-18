@@ -25,14 +25,19 @@ import { VTC_VEHICLES, vtcNeedsVan } from "@/lib/pricing";
 import { PLACES, isEmail, isPhone, makeRef, type Terminal } from "@/lib/site";
 
 type Trip = "to" | "from" | "rt";
-type Search = { dir?: "to" | "from"; addr?: string; date?: string; pax?: number };
+type Search = {
+  dir?: "to" | "from" | undefined;
+  addr?: string | undefined;
+  date?: string | undefined;
+  pax?: number | undefined;
+};
 
 export const Route = createFileRoute("/vtc")({
   validateSearch: (s: Record<string, unknown>): Search => ({
-    dir: s.dir === "to" || s.dir === "from" ? s.dir : undefined,
-    addr: typeof s.addr === "string" ? s.addr : undefined,
-    date: typeof s.date === "string" ? s.date : undefined,
-    pax: typeof s.pax === "number" && s.pax >= 1 && s.pax <= 7 ? s.pax : undefined,
+    dir: s["dir"] === "to" || s["dir"] === "from" ? s["dir"] : undefined,
+    addr: typeof s["addr"] === "string" ? s["addr"] : undefined,
+    date: typeof s["date"] === "string" ? s["date"] : undefined,
+    pax: typeof s["pax"] === "number" && s["pax"] >= 1 && s["pax"] <= 7 ? s["pax"] : undefined,
   }),
   head: () => ({
     meta: [
@@ -43,13 +48,18 @@ export const Route = createFileRoute("/vtc")({
           "Demandez un devis VTC vers ou depuis l'aéroport Nice Côte d'Azur. Berline ou van, prix fixe communiqué sous 2 h.",
       },
       { property: "og:title", content: "Chauffeur privé vers ou depuis l'aéroport de Nice" },
-      { property: "og:description", content: "Berline ou van, prix fixe communiqué avant la course." },
+      {
+        property: "og:description",
+        content: "Berline ou van, prix fixe communiqué avant la course.",
+      },
     ],
   }),
   component: VtcPage,
 });
 
-type Errors = Partial<Record<"addr" | "date" | "date2" | "name" | "phone" | "email", string>>;
+type Errors = Partial<
+  Record<"addr" | "date" | "date2" | "name" | "phone" | "email", string | undefined>
+>;
 
 function VtcPage() {
   const { t } = useI18n();
@@ -87,14 +97,17 @@ function VtcPage() {
   const place = addr.trim() || t.vtc.yourAddress;
   const [a, b] = from ? [airport, place] : [place, airport];
   const tripLabel = t.vtc.tabs[trip];
-  const dateLabel = formatShort(date, t.locale) + (trip === "rt" ? ` → ${formatShort(date2, t.locale)}` : "");
+  const dateLabel =
+    formatShort(date, t.locale) + (trip === "rt" ? ` → ${formatShort(date2, t.locale)}` : "");
   const travellers = `${t.common.passengers(pax)} · ${t.common.bags(bags)}`;
-  const extras = [seat && t.vtc.childSeat, sign && t.vtc.nameSign].filter(Boolean).join(", ") || t.common.none;
+  const extras =
+    [seat && t.vtc.childSeat, sign && t.vtc.nameSign].filter(Boolean).join(", ") || t.common.none;
 
-  const set = (k: keyof typeof contact) => (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setContact((c) => ({ ...c, [k]: e.target.value }));
-    setErrors((er) => ({ ...er, [k]: undefined }));
-  };
+  const set =
+    (k: keyof typeof contact) => (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setContact((c) => ({ ...c, [k]: e.target.value }));
+      setErrors((er) => ({ ...er, [k]: undefined }));
+    };
 
   const send = () => {
     const er: Errors = {};
@@ -106,7 +119,11 @@ function VtcPage() {
     if (!isEmail(contact.email)) er.email = t.common.errors.email;
     setErrors(er);
     if (Object.keys(er).length) {
-      setTimeout(() => document.querySelector("[data-invalid]")?.scrollIntoView({ behavior: "smooth", block: "center" }));
+      setTimeout(() =>
+        document
+          .querySelector("[data-invalid]")
+          ?.scrollIntoView({ behavior: "smooth", block: "center" }),
+      );
       return;
     }
     setBusy(true);
@@ -128,7 +145,11 @@ function VtcPage() {
   };
 
   const addressField = (
-    <Field label={from ? t.vtc.dropoffAddress : t.vtc.pickupAddress} htmlFor="t-addr" error={errors.addr}>
+    <Field
+      label={from ? t.vtc.dropoffAddress : t.vtc.pickupAddress}
+      htmlFor="t-addr"
+      error={errors.addr}
+    >
       <Input
         id="t-addr"
         list="t-places"
@@ -205,7 +226,13 @@ function VtcPage() {
                   />
                 </Field>
                 <Field label={t.common.flight} htmlFor="t-flight">
-                  <Input id="t-flight" value={flight} onChange={(e) => setFlight(e.target.value)} placeholder={t.common.flightPh} autoComplete="off" />
+                  <Input
+                    id="t-flight"
+                    value={flight}
+                    onChange={(e) => setFlight(e.target.value)}
+                    placeholder={t.common.flightPh}
+                    autoComplete="off"
+                  />
                 </Field>
                 {trip === "rt" && (
                   <>
@@ -222,15 +249,37 @@ function VtcPage() {
                       />
                     </Field>
                     <Field label={t.common.flightReturn} htmlFor="t-flight2">
-                      <Input id="t-flight2" value={flight2} onChange={(e) => setFlight2(e.target.value)} placeholder={t.common.flightPh} autoComplete="off" />
+                      <Input
+                        id="t-flight2"
+                        value={flight2}
+                        onChange={(e) => setFlight2(e.target.value)}
+                        placeholder={t.common.flightPh}
+                        autoComplete="off"
+                      />
                     </Field>
                   </>
                 )}
                 <Field label={t.vtc.passengers}>
-                  <Stepper value={pax} min={1} max={7} onChange={setPax} label={t.vtc.passengers} lessLabel={t.vtc.less} moreLabel={t.vtc.more} />
+                  <Stepper
+                    value={pax}
+                    min={1}
+                    max={7}
+                    onChange={setPax}
+                    label={t.vtc.passengers}
+                    lessLabel={t.vtc.less}
+                    moreLabel={t.vtc.more}
+                  />
                 </Field>
                 <Field label={t.vtc.bags}>
-                  <Stepper value={bags} min={0} max={6} onChange={setBags} label={t.vtc.bags} lessLabel={t.vtc.less} moreLabel={t.vtc.more} />
+                  <Stepper
+                    value={bags}
+                    min={0}
+                    max={6}
+                    onChange={setBags}
+                    label={t.vtc.bags}
+                    lessLabel={t.vtc.less}
+                    moreLabel={t.vtc.more}
+                  />
                 </Field>
               </div>
             </FormSection>
@@ -251,24 +300,72 @@ function VtcPage() {
               </div>
               {needsVan && <Note>{t.vtc.vehicleHint}</Note>}
               <div className="mt-6 grid gap-2.5 md:grid-cols-2">
-                <OptionRow label={t.vtc.childSeat} price="" checked={seat} onToggle={() => setSeat((x) => !x)} />
-                <OptionRow label={t.vtc.nameSign} price="" checked={sign} onToggle={() => setSign((x) => !x)} />
+                <OptionRow
+                  label={t.vtc.childSeat}
+                  price=""
+                  checked={seat}
+                  onToggle={() => setSeat((x) => !x)}
+                />
+                <OptionRow
+                  label={t.vtc.nameSign}
+                  price=""
+                  checked={sign}
+                  onToggle={() => setSign((x) => !x)}
+                />
               </div>
             </FormSection>
 
             <FormSection title={t.vtc.contact} hint={t.vtc.contactHint}>
               <div className="grid gap-5 md:grid-cols-2">
                 <Field label={t.common.name} htmlFor="t-name" error={errors.name}>
-                  <Input id="t-name" value={contact.name} onChange={set("name")} autoComplete="name" placeholder={t.common.namePh} className={errors.name ? invalidClass : undefined} />
+                  <Input
+                    id="t-name"
+                    value={contact.name}
+                    onChange={set("name")}
+                    autoComplete="name"
+                    placeholder={t.common.namePh}
+                    className={errors.name ? invalidClass : undefined}
+                  />
                 </Field>
                 <Field label={t.common.phone} htmlFor="t-phone" error={errors.phone}>
-                  <Input id="t-phone" type="tel" value={contact.phone} onChange={set("phone")} autoComplete="tel" placeholder={t.common.phonePh} className={errors.phone ? invalidClass : undefined} />
+                  <Input
+                    id="t-phone"
+                    type="tel"
+                    value={contact.phone}
+                    onChange={set("phone")}
+                    autoComplete="tel"
+                    placeholder={t.common.phonePh}
+                    className={errors.phone ? invalidClass : undefined}
+                  />
                 </Field>
-                <Field label={t.common.email} htmlFor="t-mail" error={errors.email} className="md:col-span-2">
-                  <Input id="t-mail" type="email" value={contact.email} onChange={set("email")} autoComplete="email" placeholder={t.common.emailPh} className={errors.email ? invalidClass : undefined} />
+                <Field
+                  label={t.common.email}
+                  htmlFor="t-mail"
+                  error={errors.email}
+                  className="md:col-span-2"
+                >
+                  <Input
+                    id="t-mail"
+                    type="email"
+                    value={contact.email}
+                    onChange={set("email")}
+                    autoComplete="email"
+                    placeholder={t.common.emailPh}
+                    className={errors.email ? invalidClass : undefined}
+                  />
                 </Field>
-                <Field label={`${t.vtc.notes} (${t.common.optional.toLowerCase()})`} htmlFor="t-notes" className="md:col-span-2">
-                  <Textarea id="t-notes" value={contact.notes} onChange={set("notes")} placeholder={t.vtc.notesPh} className="min-h-24 bg-card text-[15px]" />
+                <Field
+                  label={`${t.vtc.notes} (${t.common.optional.toLowerCase()})`}
+                  htmlFor="t-notes"
+                  className="md:col-span-2"
+                >
+                  <Textarea
+                    id="t-notes"
+                    value={contact.notes}
+                    onChange={set("notes")}
+                    placeholder={t.vtc.notesPh}
+                    className="min-h-24 bg-card text-[15px]"
+                  />
                 </Field>
               </div>
             </FormSection>

@@ -105,7 +105,8 @@ export const en: Dict = {
     imageAlt: "Sedan parked outside the terminal at Nice Côte d'Azur Airport",
     servicesEyebrow: "Our services",
     servicesTitle: "Three services, one point of contact",
-    servicesLead: "Everything happens at the Terminal 1 and 2 drop-off zones. No hunting for a space, no shuttle bus.",
+    servicesLead:
+      "Everything happens at the Terminal 1 and 2 drop-off zones. No hunting for a space, no shuttle bus.",
     services: {
       valet: {
         title: "Valet parking",
@@ -132,13 +133,23 @@ export const en: Dict = {
     howEyebrow: "The process",
     howTitle: "How it works",
     steps: [
-      { title: "Book online", text: "Dates, terminal and flight number. Secure payment and instant confirmation." },
-      { title: "Hand over your keys", text: "A valet meets you at the drop-off zone. You can message them on WhatsApp." },
-      { title: "Drive off on arrival", text: "We track your flight. Your car is handed back as soon as you land." },
+      {
+        title: "Book online",
+        text: "Dates, terminal and flight number. Secure payment and instant confirmation.",
+      },
+      {
+        title: "Hand over your keys",
+        text: "A valet meets you at the drop-off zone. You can message them on WhatsApp.",
+      },
+      {
+        title: "Drive off on arrival",
+        text: "We track your flight. Your car is handed back as soon as you land.",
+      },
     ],
     subEyebrow: "Annual subscription",
     subTitle: "Do you travel to Nice often?",
-    subText: "25 drop-offs and 25 returns included, with secure parking all year round. Designed for second-home owners and frequent travellers.",
+    subText:
+      "25 drop-offs and 25 returns included, with secure parking all year round. Designed for second-home owners and frequent travellers.",
     subCta: "Discover the subscription",
   },
   valet: {
@@ -162,7 +173,8 @@ export const en: Dict = {
     pay: (amount: string) => `Pay ${amount}`,
     rateNote: "Rate: €50 incl. VAT per started 24 h period. Confirmation by email and WhatsApp.",
     successTitle: "Booking confirmed",
-    successText: "A valet will meet you at the drop-off zone. Your confirmation has been sent by email and WhatsApp.",
+    successText:
+      "A valet will meet you at the drop-off zone. Your confirmation has been sent by email and WhatsApp.",
     vehicle: "Vehicle",
     paid: "Total paid",
   },
@@ -204,7 +216,8 @@ export const en: Dict = {
     send: "Send request",
     afterNote: "Once you accept the quote, we confirm your booking.",
     successTitle: "Request sent",
-    successText: "You will receive your quote within 2 hours by email and WhatsApp. No payment has been taken.",
+    successText:
+      "You will receive your quote within 2 hours by email and WhatsApp. No payment has been taken.",
     yourAddress: "Your address",
   },
   rental: {
@@ -261,9 +274,18 @@ export const en: Dict = {
     whoTitle: "Who is it for?",
     whoLead: "Designed for people who return to the Côte d'Azur often.",
     who: [
-      { title: "Second-home owners", text: "You visit several times a year: your car is waiting at the airport." },
-      { title: "Frequent travellers", text: "Regular business trips, with no searching for a space or shuttle." },
-      { title: "Several vehicles", text: "Add a second vehicle to your subscription. Price on request." },
+      {
+        title: "Second-home owners",
+        text: "You visit several times a year: your car is waiting at the airport.",
+      },
+      {
+        title: "Frequent travellers",
+        text: "Regular business trips, with no searching for a space or shuttle.",
+      },
+      {
+        title: "Several vehicles",
+        text: "Add a second vehicle to your subscription. Price on request.",
+      },
     ],
     howTitle: "How it works",
     steps: [
@@ -280,16 +302,29 @@ export const en: Dict = {
     ],
     faqTitle: "Frequently asked questions",
     faq: [
-      { q: "What happens after 25 trips?", a: "Each additional drop-off or return is charged at €45. We let you know from your 20th trip." },
-      { q: "Can I change vehicle?", a: "Yes. Update the licence plate from your client area at least 24 hours before your next trip." },
-      { q: "Which insurance covers my car?", a: "Your car remains covered by your own policy. Our professional insurance covers driving by our valets and parking." },
-      { q: "How do I cancel or renew?", a: "The subscription runs for 12 months. We contact you one month before it ends to renew or cancel." },
+      {
+        q: "What happens after 25 trips?",
+        a: "Each additional drop-off or return is charged at €45. We let you know from your 20th trip.",
+      },
+      {
+        q: "Can I change vehicle?",
+        a: "Yes. Update the licence plate from your client area at least 24 hours before your next trip.",
+      },
+      {
+        q: "Which insurance covers my car?",
+        a: "Your car remains covered by your own policy. Our professional insurance covers driving by our valets and parking.",
+      },
+      {
+        q: "How do I cancel or renew?",
+        a: "The subscription runs for 12 months. We contact you one month before it ends to renew or cancel.",
+      },
     ],
     formTitle: "Subscribe",
     formText: "€2,090 incl. VAT for 12 months · 25 drop-offs and 25 returns",
     pay: "Pay €2,090",
     successTitle: "Welcome aboard",
-    successText: "Your contract is on its way by email. Plan your first trip from your client area or on WhatsApp.",
+    successText:
+      "Your contract is on its way by email. Plan your first trip from your client area or on WhatsApp.",
     formula: "Plan",
     formulaValue: "Annual · 12 months",
     included: "Trips included",

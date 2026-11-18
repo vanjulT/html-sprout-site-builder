@@ -14,7 +14,12 @@ const at = (iso: string) => new Date(iso);
 
 describe("valet parking", () => {
   it("charges 50 € per started 24 h slot", () => {
-    const q = valetQuote({ drop: at("2026-06-02T08:00"), pick: at("2026-06-04T09:00"), options: [], now });
+    const q = valetQuote({
+      drop: at("2026-06-02T08:00"),
+      pick: at("2026-06-04T09:00"),
+      options: [],
+      now,
+    });
     expect(q.slots).toBe(3);
     expect(q.total).toBe(150);
   });
@@ -24,7 +29,12 @@ describe("valet parking", () => {
   });
 
   it("adds cleaning options: full clean costs 75 €", () => {
-    const q = valetQuote({ drop: at("2026-06-02T08:00"), pick: at("2026-06-03T08:00"), options: ["complet"], now });
+    const q = valetQuote({
+      drop: at("2026-06-02T08:00"),
+      pick: at("2026-06-03T08:00"),
+      options: ["complet"],
+      now,
+    });
     expect(q.total).toBe(125);
   });
 
@@ -39,7 +49,12 @@ describe("valet parking", () => {
   });
 
   it("refuses a drop-off in the past", () => {
-    const q = valetQuote({ drop: at("2026-05-30T08:00"), pick: at("2026-06-03T08:00"), options: [], now });
+    const q = valetQuote({
+      drop: at("2026-05-30T08:00"),
+      pick: at("2026-06-03T08:00"),
+      options: [],
+      now,
+    });
     expect(q.total).toBe(0);
     expect(q.error).toBe("past");
   });
@@ -57,7 +72,13 @@ describe("rental", () => {
   const berline = CARS.find((c) => c.id === "berline")!;
 
   it("charges the daily rate per started day", () => {
-    const q = rentalQuote({ car: berline, start: at("2026-06-02T10:00"), end: at("2026-06-05T10:00"), options: [], now });
+    const q = rentalQuote({
+      car: berline,
+      start: at("2026-06-02T10:00"),
+      end: at("2026-06-05T10:00"),
+      options: [],
+      now,
+    });
     expect(q.days).toBe(3);
     expect(q.total).toBe(177);
   });

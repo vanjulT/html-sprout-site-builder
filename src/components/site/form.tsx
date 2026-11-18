@@ -5,7 +5,15 @@ import { Link } from "@tanstack/react-router";
 import { useI18n } from "@/lib/i18n";
 
 /* ---------- Page intro ---------- */
-export function PageIntro({ eyebrow, title, lead }: { eyebrow: string; title: string; lead: string }) {
+export function PageIntro({
+  eyebrow,
+  title,
+  lead,
+}: {
+  eyebrow: string;
+  title: string;
+  lead: string;
+}) {
   const { t } = useI18n();
   return (
     <header className="border-b bg-paper">
@@ -32,8 +40,8 @@ export function FormSection({
   children,
 }: {
   title: string;
-  hint?: string;
-  aside?: ReactNode;
+  hint?: string | undefined;
+  aside?: ReactNode | undefined;
   children: ReactNode;
 }) {
   return (
@@ -64,10 +72,10 @@ export function Field({
   className,
 }: {
   label: string;
-  htmlFor?: string;
-  error?: string;
+  htmlFor?: string | undefined;
+  error?: string | undefined;
   children: ReactNode;
-  className?: string;
+  className?: string | undefined;
 }) {
   return (
     <div className={cn("flex flex-col gap-2", className)} data-invalid={error ? "" : undefined}>
@@ -95,7 +103,11 @@ export function Segmented<T extends string>({
   label: string;
 }) {
   return (
-    <div role="radiogroup" aria-label={label} className="flex rounded-md border border-input bg-card p-1">
+    <div
+      role="radiogroup"
+      aria-label={label}
+      className="flex rounded-md border border-input bg-card p-1"
+    >
       {options.map((o) => (
         <button
           key={o.value}
@@ -127,11 +139,11 @@ export function OptionRow({
   disabled,
 }: {
   label: string;
-  detail?: string;
+  detail?: string | undefined;
   price: string;
   checked: boolean;
   onToggle: () => void;
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 }) {
   return (
     <button
@@ -181,7 +193,11 @@ export function Stepper({
   moreLabel: string;
 }) {
   return (
-    <div className="flex h-11 items-center rounded-md border border-input bg-card" role="group" aria-label={label}>
+    <div
+      className="flex h-11 items-center rounded-md border border-input bg-card"
+      role="group"
+      aria-label={label}
+    >
       <button
         type="button"
         aria-label={lessLabel}
@@ -226,21 +242,42 @@ export function SummaryRow({ label, value }: { label: string; value: ReactNode }
   );
 }
 
-export function SummaryTotal({ label, value, suffix }: { label: string; value: string; suffix?: string }) {
+export function SummaryTotal({
+  label,
+  value,
+  suffix,
+}: {
+  label: string;
+  value: string;
+  suffix?: string | undefined;
+}) {
   return (
     <div className="my-5 flex items-baseline justify-between border-t pt-5">
       <span className="font-semibold text-muted-foreground">{label}</span>
       <span className="figure text-4xl">
         {value}
-        {suffix && <small className="ml-1.5 font-sans text-sm text-muted-foreground">{suffix}</small>}
+        {suffix && (
+          <small className="ml-1.5 font-sans text-sm text-muted-foreground">{suffix}</small>
+        )}
       </span>
     </div>
   );
 }
 
-export function Note({ children, tone = "muted" }: { children: ReactNode; tone?: "muted" | "error" }) {
+export function Note({
+  children,
+  tone = "muted",
+}: {
+  children: ReactNode;
+  tone?: "muted" | "error" | undefined;
+}) {
   return (
-    <p className={cn("mt-3 text-[13px] leading-relaxed", tone === "error" ? "font-medium text-destructive" : "text-muted-foreground")}>
+    <p
+      className={cn(
+        "mt-3 text-[13px] leading-relaxed",
+        tone === "error" ? "font-medium text-destructive" : "text-muted-foreground",
+      )}
+    >
       {children}
     </p>
   );

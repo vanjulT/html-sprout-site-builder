@@ -3,7 +3,12 @@ import { ArrowRight, Check, Lock } from "lucide-react";
 import { useState, type ChangeEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { ConfirmationDialog, type Confirmation } from "@/components/site/ConfirmationDialog";
 import {
   BookingLayout,
@@ -32,14 +37,15 @@ export const Route = createFileRoute("/abonnement")({
       { property: "og:title", content: "Abonnement voiturier annuel à l'aéroport de Nice" },
       {
         property: "og:description",
-        content: "25 prises en charge et 25 retours inclus, parking sécurisé toute l'année. 2 090 € TTC.",
+        content:
+          "25 prises en charge et 25 retours inclus, parking sécurisé toute l'année. 2 090 € TTC.",
       },
     ],
   }),
   component: SubscriptionPage,
 });
 
-type Errors = Partial<Record<"name" | "phone" | "email" | "plate", string>>;
+type Errors = Partial<Record<"name" | "phone" | "email" | "plate", string | undefined>>;
 
 function SubscriptionPage() {
   const { t, eur } = useI18n();
@@ -64,7 +70,9 @@ function SubscriptionPage() {
     if (!contact.plate.trim()) er.plate = t.common.errors.plate;
     setErrors(er);
     if (Object.keys(er).length) {
-      document.querySelector("[data-invalid]")?.scrollIntoView({ behavior: "smooth", block: "center" });
+      document
+        .querySelector("[data-invalid]")
+        ?.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
     setBusy(true);
@@ -123,7 +131,9 @@ function SubscriptionPage() {
               {t.sub.cta}
               <ArrowRight />
             </Button>
-            <p className="mt-4 max-w-[16rem] text-[13px] text-muted-foreground md:ml-auto">{t.sub.perTrip}</p>
+            <p className="mt-4 max-w-[16rem] text-[13px] text-muted-foreground md:ml-auto">
+              {t.sub.perTrip}
+            </p>
           </div>
         </div>
       </section>
@@ -136,7 +146,9 @@ function SubscriptionPage() {
           <div className="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
             {t.sub.who.map((w, i) => (
               <article key={w.title} className="border-t border-foreground pt-6">
-                <span className="text-sm font-semibold text-muted-foreground tabular-nums">0{i + 1}</span>
+                <span className="text-sm font-semibold text-muted-foreground tabular-nums">
+                  0{i + 1}
+                </span>
                 <h3 className="mt-3 text-[1.75rem]">{w.title}</h3>
                 <p className="mt-3 text-[15px] text-muted-foreground">{w.text}</p>
               </article>
@@ -163,7 +175,10 @@ function SubscriptionPage() {
           <h2 className="text-3xl">{t.sub.extrasTitle}</h2>
           <dl className="mt-8">
             {t.sub.extras.map(([label, price]) => (
-              <div key={label} className="flex justify-between gap-4 border-b border-dashed py-3 text-[15px]">
+              <div
+                key={label}
+                className="flex justify-between gap-4 border-b border-dashed py-3 text-[15px]"
+              >
                 <dt className="text-muted-foreground">{label}</dt>
                 <dd className="figure text-lg">{price}</dd>
               </div>
@@ -179,8 +194,12 @@ function SubscriptionPage() {
           <Accordion type="single" collapsible className="mt-8">
             {t.sub.faq.map((f, i) => (
               <AccordionItem key={f.q} value={`faq-${i}`}>
-                <AccordionTrigger className="text-left text-[16px] font-semibold">{f.q}</AccordionTrigger>
-                <AccordionContent className="text-[15px] text-muted-foreground">{f.a}</AccordionContent>
+                <AccordionTrigger className="text-left text-[16px] font-semibold">
+                  {f.q}
+                </AccordionTrigger>
+                <AccordionContent className="text-[15px] text-muted-foreground">
+                  {f.a}
+                </AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
@@ -243,7 +262,11 @@ function SubscriptionPage() {
             <Summary title={t.common.summary}>
               <SummaryRow label={t.sub.formula} value={t.sub.formulaValue} />
               <SummaryRow label={t.sub.included} value={t.sub.includedValue} />
-              <SummaryTotal label={t.common.total} value={eur(SUBSCRIPTION.pricePerYear)} suffix={t.common.vat} />
+              <SummaryTotal
+                label={t.common.total}
+                value={eur(SUBSCRIPTION.pricePerYear)}
+                suffix={t.common.vat}
+              />
               <Button size="lg" className="w-full" onClick={pay} disabled={busy}>
                 <Lock />
                 {busy ? t.common.processing : t.sub.pay}

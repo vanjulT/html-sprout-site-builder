@@ -31,7 +31,7 @@ export const startOfDay = (d: Date) => {
 export const timeOf = (d: Date) => `${p2(d.getHours())}:${p2(d.getMinutes())}`;
 
 export function withTime(day: Date, time: string): Date {
-  const [h, m] = time.split(":").map(Number);
+  const [h = 0, m = 0] = time.split(":").map(Number);
   const d = new Date(day);
   d.setHours(h, m, 0, 0);
   return d;

@@ -7,9 +7,9 @@ import { useI18n } from "@/lib/i18n";
 export type Confirmation = {
   title: string;
   text: string;
-  reference?: string;
+  reference?: string | undefined;
   lines: [string, string][];
-  extra?: ReactNode;
+  extra?: ReactNode | undefined;
 };
 
 export function ConfirmationDialog({
@@ -28,7 +28,9 @@ export function ConfirmationDialog({
             <span className="grid size-12 place-items-center rounded-full bg-sun-soft text-foreground">
               <Check className="size-6" strokeWidth={2.5} />
             </span>
-            <DialogTitle className="mt-5 font-display text-3xl font-normal">{data.title}</DialogTitle>
+            <DialogTitle className="mt-5 font-display text-3xl font-normal">
+              {data.title}
+            </DialogTitle>
             <DialogDescription className="mt-2 text-[15px]">{data.text}</DialogDescription>
             {data.reference && (
               <p className="mt-4 inline-block rounded-sm border px-2.5 py-1 font-mono text-sm tracking-wider">
@@ -37,7 +39,10 @@ export function ConfirmationDialog({
             )}
             <div className="mt-5 rounded-md bg-paper px-4 py-1">
               {data.lines.map(([a, b]) => (
-                <div key={a} className="flex justify-between gap-4 border-b border-dashed py-2.5 text-sm last:border-b-0">
+                <div
+                  key={a}
+                  className="flex justify-between gap-4 border-b border-dashed py-2.5 text-sm last:border-b-0"
+                >
                   <span className="text-muted-foreground">{a}</span>
                   <span className="text-right font-semibold">{b}</span>
                 </div>

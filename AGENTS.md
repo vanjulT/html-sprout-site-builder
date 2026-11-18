@@ -28,3 +28,10 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+
+- All visible copy lives in `src/lib/i18n/fr.ts` and `en.ts` (same shape, typed by `Dict`); components read it via `useI18n()`. Why: the site is bilingual and new text must never be hard-coded in one language.
+- Prices and booking rules live only in `src/lib/pricing.ts` (pure functions, covered by `pricing.test.ts`); pages never compute prices inline. Why: one source of truth that can be tested.
+- Pages render French on the server; the saved or browser language applies after hydration, and date defaults are set in `useEffect`. Why: avoids hydration mismatches.
+- Payments, quotes, emails and sign-in links are simulated in the browser until a backend and Stripe are connected.
